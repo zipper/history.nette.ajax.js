@@ -44,7 +44,7 @@
 			this.popped = !!('state' in window.history) && !!window.history.state;
 			var initialUrl = window.location.href;
 
-			$(window).on('popstate.nette', $.proxy(function (e) {
+			$(window).on('popstate.nette', (function (e) {
 				var state = e.originalEvent.state || this.initialState;
 				var initialPop = (!this.popped && initialUrl === state.href);
 				this.popped = true;
@@ -60,7 +60,7 @@
 						off: ['history']
 					});
 				}
-			}, this));
+			}).bind(this));
 
 			this.initialState = $.extend({},
 				history.state || {},
